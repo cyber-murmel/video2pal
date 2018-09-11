@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 import subprocess
-from PIL import Image
 
-VIDEO_SCALE = '702:576'
+VISIB_LINES = 576
+PIXEL_PER_LINE = 702
+VIDEO_SCALE = '{}:{}'.format(PIXEL_PER_LINE, VISIB_LINES)
+
 ffmpeg = subprocess.Popen(['/usr/bin/ffmpeg',
     '-i', '/home/marble/lib/Videos/bigbuckbunny.mp4',
     '-c:v', 'rawvideo',
@@ -11,23 +13,16 @@ ffmpeg = subprocess.Popen(['/usr/bin/ffmpeg',
     '-f', 'rawvideo',
     '-pix_fmt', 'yuv444p',
     '-r', '50',
-    '-y',
+    #    '-y',
     '-'],
     stdout = subprocess.PIPE)
 
-ffmpeg.stdout.read(702*576*3*100)
-
-img = Image.new('YCbCr', (702, 576))
-
-y = list(ffmpeg.stdout.read(702*576))
-u = list(ffmpeg.stdout.read(702*576))
-v = list(ffmpeg.stdout.read(702*576))
-data = [_ for _ in zip(y, u, v)]
-
-def yuv_frame2pal_frame(yuv_frame):
-    pass
-
-img.putdata(data)
-img.show()
+while True:
+    #y = list(ffmpeg.stdout.read(702*576))
+    #u = list(ffmpeg.stdout.read(702*576))
+    v = list(ffmpeg.stdout.read(702*576*3))
+    if len(v) < 702*576:
+        break;
+    #data = [y, u, v]
 
 ffmpeg.kill()
