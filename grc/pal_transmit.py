@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Pal Transmit
-# Generated: Sun Sep 16 18:50:56 2018
+# Generated: Sun Sep 16 22:41:22 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -136,15 +136,13 @@ class pal_transmit(gr.top_block, Qt.QWidget):
         self.blocks_stream_to_streams_0_0_0 = blocks.stream_to_streams(gr.sizeof_float*samp_visual, 2)
         self.blocks_stream_to_streams_0_0 = blocks.stream_to_streams(gr.sizeof_float*lines_half_frame*samp_visual, 3)
         self.blocks_stream_to_streams_0 = blocks.stream_to_streams(gr.sizeof_float*lines_half_frame*samp_visual, 3)
-        self.blocks_stream_mux_3_0 = blocks.stream_mux(gr.sizeof_float*702, (8, lines_visual/2, 9))
+        self.blocks_stream_mux_3_0 = blocks.stream_mux(gr.sizeof_float*702, (9, lines_visual/2, 8))
         self.blocks_stream_mux_3 = blocks.stream_mux(gr.sizeof_float*702, (8, lines_visual/2, 9))
         self.blocks_stream_mux_2_0 = blocks.stream_mux(gr.sizeof_gr_complex*1, (samp_h_sync,samp_burst_delay+samp_burst+samp_visual_delay, samp_visual, samp_line-(samp_h_sync+samp_burst_delay+samp_burst+samp_visual_delay+samp_visual)))
         self.blocks_stream_mux_2 = blocks.stream_mux(gr.sizeof_gr_complex*1, (samp_h_sync,samp_burst_delay+samp_burst+samp_visual_delay, samp_visual, samp_line-(samp_h_sync+samp_burst_delay+samp_burst+samp_visual_delay+samp_visual)))
         self.blocks_stream_mux_1 = blocks.stream_mux(gr.sizeof_gr_complex*samp_line/2, (6,5,5, 2*305, 5, 5, 4, 2*305))
-        self.blocks_null_sink_1_1_1 = blocks.null_sink(gr.sizeof_float*lines_half_frame*samp_visual)
-        self.blocks_null_sink_1_1_0_0 = blocks.null_sink(gr.sizeof_float*lines_half_frame*samp_visual)
-        self.blocks_null_sink_1_1_0 = blocks.null_sink(gr.sizeof_float*lines_half_frame*samp_visual)
-        self.blocks_null_sink_1_1 = blocks.null_sink(gr.sizeof_float*lines_half_frame*samp_visual)
+        self.blocks_null_sink_2_1_0 = blocks.null_sink(gr.sizeof_float*lines_half_frame*samp_visual)
+        self.blocks_null_sink_2_1 = blocks.null_sink(gr.sizeof_float*lines_half_frame*samp_visual)
         self.blocks_null_sink_1_0 = blocks.null_sink(gr.sizeof_float*samp_visual)
         self.blocks_null_sink_1 = blocks.null_sink(gr.sizeof_float*samp_visual)
         self.blocks_multiply_const_vxx_0 = blocks.multiply_const_vff((0.00390625/2, ))
@@ -194,11 +192,11 @@ class pal_transmit(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_stream_mux_2_0, 0), (self.blocks_stream_to_vector_0_0, 0))
         self.connect((self.blocks_stream_mux_3, 0), (self.blocks_stream_to_vector_1_0_0_0, 0))
         self.connect((self.blocks_stream_mux_3_0, 0), (self.blocks_stream_to_vector_1_0_0_0_0, 0))
-        self.connect((self.blocks_stream_to_streams_0, 1), (self.blocks_null_sink_1_1, 0))
-        self.connect((self.blocks_stream_to_streams_0, 2), (self.blocks_null_sink_1_1_0, 0))
+        self.connect((self.blocks_stream_to_streams_0, 1), (self.blocks_null_sink_2_1_0, 0))
+        self.connect((self.blocks_stream_to_streams_0, 2), (self.blocks_null_sink_2_1_0, 1))
         self.connect((self.blocks_stream_to_streams_0, 0), (self.blocks_vector_to_stream_1_0, 0))
-        self.connect((self.blocks_stream_to_streams_0_0, 2), (self.blocks_null_sink_1_1_0_0, 0))
-        self.connect((self.blocks_stream_to_streams_0_0, 1), (self.blocks_null_sink_1_1_1, 0))
+        self.connect((self.blocks_stream_to_streams_0_0, 1), (self.blocks_null_sink_2_1, 0))
+        self.connect((self.blocks_stream_to_streams_0_0, 2), (self.blocks_null_sink_2_1, 1))
         self.connect((self.blocks_stream_to_streams_0_0, 0), (self.blocks_vector_to_stream_1_0_1, 0))
         self.connect((self.blocks_stream_to_streams_0_0_0, 1), (self.blocks_null_sink_1, 0))
         self.connect((self.blocks_stream_to_streams_0_0_0, 0), (self.blocks_stream_mux_3, 1))
@@ -216,10 +214,10 @@ class pal_transmit(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_stream_to_vector_1_0_0_1_0, 0), (self.blocks_stream_mux_3, 2))
         self.connect((self.blocks_stream_to_vector_1_0_0_1_0_0, 0), (self.blocks_stream_mux_3_0, 2))
         self.connect((self.blocks_stream_to_vector_1_0_0_1_1, 0), (self.blocks_stream_mux_3_0, 0))
-        self.connect((self.blocks_sub_xx_0, 0), (self.osmosdr_sink_0_0, 0))
+        self.connect((self.blocks_sub_xx_0, 0), (self.blocks_stream_to_vector_0_1, 0))
         self.connect((self.blocks_uchar_to_float_0, 0), (self.blocks_multiply_const_vxx_0, 0))
-        self.connect((self.blocks_vector_to_stream_0, 0), (self.blocks_stream_to_vector_0_1, 0))
-        self.connect((self.blocks_vector_to_stream_0_0, 0), (self.blocks_sub_xx_0, 1))
+        self.connect((self.blocks_vector_to_stream_0, 0), (self.blocks_sub_xx_0, 1))
+        self.connect((self.blocks_vector_to_stream_0_0, 0), (self.osmosdr_sink_0_0, 0))
         self.connect((self.blocks_vector_to_stream_1, 0), (self.blocks_stream_to_streams_0_0_0, 0))
         self.connect((self.blocks_vector_to_stream_1_0, 0), (self.blocks_float_to_complex_0, 0))
         self.connect((self.blocks_vector_to_stream_1_0_1, 0), (self.blocks_float_to_complex_0_0, 0))
