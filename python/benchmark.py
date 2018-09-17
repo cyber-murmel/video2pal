@@ -17,12 +17,9 @@ ffmpeg = subprocess.Popen(['/usr/bin/ffmpeg',
     '-'],
     stdout = subprocess.PIPE)
 
-while True:
-    #y = list(ffmpeg.stdout.read(702*576))
-    #u = list(ffmpeg.stdout.read(702*576))
-    v = list(ffmpeg.stdout.read(702*576*3))
-    if len(v) < 702*576:
-        break;
-    #data = [y, u, v]
+with open('/dev/stdout', 'wb') as out:
+    while ffmpeg.poll() == None:
+        v = ffmpeg.stdout.read(702*576*3)
+        out.write(v)
 
 ffmpeg.kill()
