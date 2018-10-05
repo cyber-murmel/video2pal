@@ -113,7 +113,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>32000</value>
+      <value>13.5e6</value>
     </param>
   </block>
   <block>
@@ -227,7 +227,7 @@
     </param>
     <param>
       <key>repeat</key>
-      <value>False</value>
+      <value>True</value>
     </param>
     <param>
       <key>vlen</key>
@@ -576,6 +576,61 @@
     </param>
   </block>
   <block>
+    <key>blocks_throttle</key>
+    <param>
+      <key>alias</key>
+      <value></value>
+    </param>
+    <param>
+      <key>comment</key>
+      <value></value>
+    </param>
+    <param>
+      <key>affinity</key>
+      <value></value>
+    </param>
+    <param>
+      <key>_enabled</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>_coordinate</key>
+      <value>(728, 708)</value>
+    </param>
+    <param>
+      <key>_rotation</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>id</key>
+      <value>blocks_throttle_0</value>
+    </param>
+    <param>
+      <key>ignoretag</key>
+      <value>True</value>
+    </param>
+    <param>
+      <key>maxoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>minoutbuf</key>
+      <value>0</value>
+    </param>
+    <param>
+      <key>samples_per_second</key>
+      <value>samp_rate</value>
+    </param>
+    <param>
+      <key>type</key>
+      <value>complex</value>
+    </param>
+    <param>
+      <key>vlen</key>
+      <value>1</value>
+    </param>
+  </block>
+  <block>
     <key>parameter</key>
     <param>
       <key>alias</key>
@@ -752,7 +807,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(784, 444)</value>
+      <value>(784, 436)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1016,7 +1071,7 @@
     </param>
     <param>
       <key>name</key>
-      <value>""</value>
+      <value>"Y"</value>
     </param>
     <param>
       <key>nconnections</key>
@@ -1024,7 +1079,7 @@
     </param>
     <param>
       <key>size</key>
-      <value>1024</value>
+      <value>864*625</value>
     </param>
     <param>
       <key>srate</key>
@@ -1044,7 +1099,7 @@
     </param>
     <param>
       <key>tr_level</key>
-      <value>0.0</value>
+      <value>0.1</value>
     </param>
     <param>
       <key>tr_mode</key>
@@ -1119,7 +1174,7 @@
     </param>
     <param>
       <key>_coordinate</key>
-      <value>(784, 572)</value>
+      <value>(872, 564)</value>
     </param>
     <param>
       <key>gui_hint</key>
@@ -1383,7 +1438,7 @@
     </param>
     <param>
       <key>name</key>
-      <value>""</value>
+      <value>"UV"</value>
     </param>
     <param>
       <key>nconnections</key>
@@ -1391,7 +1446,7 @@
     </param>
     <param>
       <key>size</key>
-      <value>1024</value>
+      <value>864*625</value>
     </param>
     <param>
       <key>srate</key>
@@ -1411,7 +1466,7 @@
     </param>
     <param>
       <key>tr_level</key>
-      <value>0.0</value>
+      <value>0.1</value>
     </param>
     <param>
       <key>tr_mode</key>
@@ -1470,7 +1525,7 @@
   </connection>
   <connection>
     <source_block_id>blocks_float_to_complex_0</source_block_id>
-    <sink_block_id>qtgui_time_sink_x_0_0</sink_block_id>
+    <sink_block_id>blocks_throttle_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>0</sink_key>
   </connection>
@@ -1503,5 +1558,11 @@
     <sink_block_id>blocks_float_to_complex_0</sink_block_id>
     <source_key>0</source_key>
     <sink_key>1</sink_key>
+  </connection>
+  <connection>
+    <source_block_id>blocks_throttle_0</source_block_id>
+    <sink_block_id>qtgui_time_sink_x_0_0</sink_block_id>
+    <source_key>0</source_key>
+    <sink_key>0</sink_key>
   </connection>
 </flow_graph>

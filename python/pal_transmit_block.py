@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Pal Transmit Block
-# Generated: Thu Oct  4 23:52:07 2018
+# Generated: Fri Oct  5 18:31:35 2018
 ##################################################
 
 if __name__ == '__main__':
@@ -67,15 +67,15 @@ class pal_transmit_block(gr.top_block, Qt.QWidget):
         ##################################################
         # Variables
         ##################################################
-        self.samp_rate = samp_rate = 32000
+        self.samp_rate = samp_rate = 13.5e6
 
         ##################################################
         # Blocks
         ##################################################
         self.qtgui_time_sink_x_0_0 = qtgui.time_sink_c(
-        	1024, #size
+        	864*625, #size
         	samp_rate, #samp_rate
-        	"", #name
+        	"UV", #name
         	1 #number of inputs
         )
         self.qtgui_time_sink_x_0_0.set_update_time(0.10)
@@ -84,7 +84,7 @@ class pal_transmit_block(gr.top_block, Qt.QWidget):
         self.qtgui_time_sink_x_0_0.set_y_label('Amplitude', "")
 
         self.qtgui_time_sink_x_0_0.enable_tags(-1, True)
-        self.qtgui_time_sink_x_0_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "")
+        self.qtgui_time_sink_x_0_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.1, 0, 0, "")
         self.qtgui_time_sink_x_0_0.enable_autoscale(False)
         self.qtgui_time_sink_x_0_0.enable_grid(False)
         self.qtgui_time_sink_x_0_0.enable_axis_labels(True)
@@ -124,9 +124,9 @@ class pal_transmit_block(gr.top_block, Qt.QWidget):
         self._qtgui_time_sink_x_0_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0_0.pyqwidget(), Qt.QWidget)
         self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_0_win)
         self.qtgui_time_sink_x_0 = qtgui.time_sink_c(
-        	1024, #size
+        	864*625, #size
         	samp_rate, #samp_rate
-        	"", #name
+        	"Y", #name
         	1 #number of inputs
         )
         self.qtgui_time_sink_x_0.set_update_time(0.10)
@@ -135,7 +135,7 @@ class pal_transmit_block(gr.top_block, Qt.QWidget):
         self.qtgui_time_sink_x_0.set_y_label('Amplitude', "")
 
         self.qtgui_time_sink_x_0.enable_tags(-1, True)
-        self.qtgui_time_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.0, 0, 0, "")
+        self.qtgui_time_sink_x_0.set_trigger_mode(qtgui.TRIG_MODE_FREE, qtgui.TRIG_SLOPE_POS, 0.1, 0, 0, "")
         self.qtgui_time_sink_x_0.enable_autoscale(False)
         self.qtgui_time_sink_x_0.enable_grid(False)
         self.qtgui_time_sink_x_0.enable_axis_labels(True)
@@ -174,6 +174,7 @@ class pal_transmit_block(gr.top_block, Qt.QWidget):
 
         self._qtgui_time_sink_x_0_win = sip.wrapinstance(self.qtgui_time_sink_x_0.pyqwidget(), Qt.QWidget)
         self.top_grid_layout.addWidget(self._qtgui_time_sink_x_0_win)
+        self.blocks_throttle_0 = blocks.throttle(gr.sizeof_gr_complex*1, samp_rate,True)
         self.blocks_short_to_float_0_0_0 = blocks.short_to_float(1, 2**15)
         self.blocks_short_to_float_0_0 = blocks.short_to_float(1, 2**15)
         self.blocks_short_to_float_0 = blocks.short_to_float(1, 2**15)
@@ -182,7 +183,7 @@ class pal_transmit_block(gr.top_block, Qt.QWidget):
         self.blocks_float_to_complex_0 = blocks.float_to_complex(1)
         self.blocks_file_source_0_1 = blocks.file_source(gr.sizeof_short*1, path_fifo_v, False)
         self.blocks_file_source_0_1.set_begin_tag(pmt.PMT_NIL)
-        self.blocks_file_source_0_0 = blocks.file_source(gr.sizeof_short*1, path_fifo_y, False)
+        self.blocks_file_source_0_0 = blocks.file_source(gr.sizeof_short*1, path_fifo_y, True)
         self.blocks_file_source_0_0.set_begin_tag(pmt.PMT_NIL)
         self.blocks_file_source_0 = blocks.file_source(gr.sizeof_short*1, path_fifo_u, False)
         self.blocks_file_source_0.set_begin_tag(pmt.PMT_NIL)
@@ -195,12 +196,13 @@ class pal_transmit_block(gr.top_block, Qt.QWidget):
         self.connect((self.blocks_file_source_0, 0), (self.blocks_short_to_float_0_0, 0))
         self.connect((self.blocks_file_source_0_0, 0), (self.blocks_short_to_float_0, 0))
         self.connect((self.blocks_file_source_0_1, 0), (self.blocks_short_to_float_0_0_0, 0))
-        self.connect((self.blocks_float_to_complex_0, 0), (self.qtgui_time_sink_x_0_0, 0))
+        self.connect((self.blocks_float_to_complex_0, 0), (self.blocks_throttle_0, 0))
         self.connect((self.blocks_float_to_complex_0_0, 0), (self.qtgui_time_sink_x_0, 0))
         self.connect((self.blocks_null_source_0, 0), (self.blocks_float_to_complex_0_0, 1))
         self.connect((self.blocks_short_to_float_0, 0), (self.blocks_float_to_complex_0_0, 0))
         self.connect((self.blocks_short_to_float_0_0, 0), (self.blocks_float_to_complex_0, 0))
         self.connect((self.blocks_short_to_float_0_0_0, 0), (self.blocks_float_to_complex_0, 1))
+        self.connect((self.blocks_throttle_0, 0), (self.qtgui_time_sink_x_0_0, 0))
 
     def closeEvent(self, event):
         self.settings = Qt.QSettings("GNU Radio", "pal_transmit_block")
@@ -226,7 +228,7 @@ class pal_transmit_block(gr.top_block, Qt.QWidget):
 
     def set_path_fifo_y(self, path_fifo_y):
         self.path_fifo_y = path_fifo_y
-        self.blocks_file_source_0_0.open(self.path_fifo_y, False)
+        self.blocks_file_source_0_0.open(self.path_fifo_y, True)
 
     def get_samp_rate(self):
         return self.samp_rate
@@ -235,6 +237,7 @@ class pal_transmit_block(gr.top_block, Qt.QWidget):
         self.samp_rate = samp_rate
         self.qtgui_time_sink_x_0_0.set_samp_rate(self.samp_rate)
         self.qtgui_time_sink_x_0.set_samp_rate(self.samp_rate)
+        self.blocks_throttle_0.set_sample_rate(self.samp_rate)
 
 
 def argument_parser():
