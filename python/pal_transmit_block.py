@@ -3,7 +3,7 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Pal Transmit Block
-# Generated: Mon Oct 22 23:56:13 2018
+# Generated: Thu Dec 27 13:15:26 2018
 ##################################################
 
 from gnuradio import analog
@@ -34,16 +34,18 @@ class pal_transmit_block(gr.top_block):
         ##################################################
         self.samp_rate = samp_rate = int(13.5e6)
         self.rf_gain = rf_gain = 14
-        self.if_gain = if_gain = 48
+        self.out_samp_rate = out_samp_rate = samp_rate*6
+        self.if_gain = if_gain = 47
+        self.freq = freq = [41.25, 48.25, 55.25, 62.25, 175.25, 182.25, 189.25, 196.25, 203.25, 210.25, 217.25, 224.25, 471.25, 479.25, 487.25, 495.25, 503.25, 511.25, 519.25, 527.25, 535.25, 543.25, 551.25, 559.25, 567.25, 575.25, 583.25, 591.25, 599.25, 607.25, 615.25, 623.25, 631.25, 639.25, 647.25, 655.25, 663.25, 671.25, 679.25, 687.25, 695.25, 703.25, 711.25, 719.25, 727.25, 735.25, 743.25, 751.25, 759.25, 767.25, 775.25, 783.25, 791.25, 799.25, 807.25, 815.25, 823.25, 831.25, 839.25, 847.25, 855.25, 863.25, 871.25, 879.25, 887.25, 895.25, 903.25, 911.25, 919.25, 927.25, 935.25, 943.25, 951.25][9]
 
         ##################################################
         # Blocks
         ##################################################
         self.osmosdr_sink_0_0 = osmosdr.sink( args="numchan=" + str(1) + " " + 'hackrf=0' )
         self.osmosdr_sink_0_0.set_sample_rate(samp_rate)
-        self.osmosdr_sink_0_0.set_center_freq(180e6, 0)
+        self.osmosdr_sink_0_0.set_center_freq(freq*1e6, 0)
         self.osmosdr_sink_0_0.set_freq_corr(0, 0)
-        self.osmosdr_sink_0_0.set_gain(rf_gain, 0)
+        self.osmosdr_sink_0_0.set_gain(rf_gain*0, 0)
         self.osmosdr_sink_0_0.set_if_gain(if_gain, 0)
         self.osmosdr_sink_0_0.set_bb_gain(24, 0)
         self.osmosdr_sink_0_0.set_antenna('', 0)
@@ -127,6 +129,7 @@ class pal_transmit_block(gr.top_block):
 
     def set_samp_rate(self, samp_rate):
         self.samp_rate = samp_rate
+        self.set_out_samp_rate(self.samp_rate*6)
         self.osmosdr_sink_0_0.set_sample_rate(self.samp_rate)
         self.analog_sig_source_x_1.set_sampling_freq(self.samp_rate)
 
@@ -135,7 +138,13 @@ class pal_transmit_block(gr.top_block):
 
     def set_rf_gain(self, rf_gain):
         self.rf_gain = rf_gain
-        self.osmosdr_sink_0_0.set_gain(self.rf_gain, 0)
+        self.osmosdr_sink_0_0.set_gain(self.rf_gain*0, 0)
+
+    def get_out_samp_rate(self):
+        return self.out_samp_rate
+
+    def set_out_samp_rate(self, out_samp_rate):
+        self.out_samp_rate = out_samp_rate
 
     def get_if_gain(self):
         return self.if_gain
@@ -143,6 +152,13 @@ class pal_transmit_block(gr.top_block):
     def set_if_gain(self, if_gain):
         self.if_gain = if_gain
         self.osmosdr_sink_0_0.set_if_gain(self.if_gain, 0)
+
+    def get_freq(self):
+        return self.freq
+
+    def set_freq(self, freq):
+        self.freq = freq
+        self.osmosdr_sink_0_0.set_center_freq(self.freq*1e6, 0)
 
 
 def argument_parser():

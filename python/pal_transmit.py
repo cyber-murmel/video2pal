@@ -114,29 +114,29 @@ def prefill_buffers():
 def ffmpeg_producer(path_fifo_Y, path_fifo_U, path_fifo_V):
     try:
         buff_Y, buff_U, buff_V = prefill_buffers()
-        # ffmpeg = subprocess.Popen(['/usr/bin/ffmpeg',
-        #     '-i', '/home/marble/lib/Videos/bigbuckbunny.mp4',
-        #     '-codec:v', 'rawvideo',
-        #     '-vf', 'scale=' + VIDEO_SCALE + ':force_original_aspect_ratio=decrease,pad=' + VIDEO_SCALE + ':(ow-iw)/2:(oh-ih)/2',
-        #     '-c:v', 'rawvideo',
-        #     '-f', 'rawvideo',
-        #     '-pix_fmt', 'yuv444p',
-        #     '-r', '50',
-        #     '-loglevel', 'quiet',
-        #     #    '-y',
-        #     '-'],
-        #     stdout = subprocess.PIPE)
         ffmpeg = subprocess.Popen(['/usr/bin/ffmpeg',
-            '-f', 'lavfi',
-            '-i', 'testsrc=size=702x576:rate=50',
+            '-i', '/home/marble/lib/Videos/bigbuckbunny.mp4',
             '-codec:v', 'rawvideo',
-            '-vf', 'scale=702:576:force_original_aspect_ratio=decrease,pad=702:576:(ow-iw)/2:(oh-ih)/2',
+            '-vf', 'scale=' + VIDEO_SCALE + ':force_original_aspect_ratio=decrease,pad=' + VIDEO_SCALE + ':(ow-iw)/2:(oh-ih)/2',
+            '-c:v', 'rawvideo',
             '-f', 'rawvideo',
             '-pix_fmt', 'yuv444p',
             '-r', '50',
             '-loglevel', 'quiet',
+            #    '-y',
             '-'],
             stdout = subprocess.PIPE)
+        # ffmpeg = subprocess.Popen(['/usr/bin/ffmpeg',
+        #     '-f', 'lavfi',
+        #     '-i', 'testsrc=size=702x576:rate=50',
+        #     '-codec:v', 'rawvideo',
+        #     '-vf', 'scale=702:576:force_original_aspect_ratio=decrease,pad=702:576:(ow-iw)/2:(oh-ih)/2',
+        #     '-f', 'rawvideo',
+        #     '-pix_fmt', 'yuv444p',
+        #     '-r', '50',
+        #     '-loglevel', 'quiet',
+        #     '-'],
+        #     stdout = subprocess.PIPE)
         # concurrently open writing access to all fifos, because we don't
         # know in what order the gnuradio generated script will open them
         pool = ThreadPool(processes=3)
