@@ -3,8 +3,9 @@
 ##################################################
 # GNU Radio Python Flow Graph
 # Title: Pal Transmit Block
-# Generated: Thu Dec 27 13:15:26 2018
+# GNU Radio version: 3.7.13.5
 ##################################################
+
 
 from gnuradio import analog
 from gnuradio import blocks
@@ -15,6 +16,7 @@ from gnuradio.filter import firdes
 from optparse import OptionParser
 import osmosdr
 import pmt
+import time
 
 
 class pal_transmit_block(gr.top_block):
@@ -41,11 +43,11 @@ class pal_transmit_block(gr.top_block):
         ##################################################
         # Blocks
         ##################################################
-        self.osmosdr_sink_0_0 = osmosdr.sink( args="numchan=" + str(1) + " " + 'hackrf=0' )
+        self.osmosdr_sink_0_0 = osmosdr.sink( args="numchan=" + str(1) + " " + '' )
         self.osmosdr_sink_0_0.set_sample_rate(samp_rate)
         self.osmosdr_sink_0_0.set_center_freq(freq*1e6, 0)
         self.osmosdr_sink_0_0.set_freq_corr(0, 0)
-        self.osmosdr_sink_0_0.set_gain(rf_gain*0, 0)
+        self.osmosdr_sink_0_0.set_gain(rf_gain, 0)
         self.osmosdr_sink_0_0.set_if_gain(if_gain, 0)
         self.osmosdr_sink_0_0.set_bb_gain(24, 0)
         self.osmosdr_sink_0_0.set_antenna('', 0)
@@ -138,7 +140,7 @@ class pal_transmit_block(gr.top_block):
 
     def set_rf_gain(self, rf_gain):
         self.rf_gain = rf_gain
-        self.osmosdr_sink_0_0.set_gain(self.rf_gain*0, 0)
+        self.osmosdr_sink_0_0.set_gain(self.rf_gain, 0)
 
     def get_out_samp_rate(self):
         return self.out_samp_rate
